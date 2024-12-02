@@ -59,8 +59,12 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/systems');
         },
         error: (error) => {
-          console.error('Error al iniciar sesi&oacute;n', error);
-          this.errorMessage = 'Error al iniciar sesi&oacute;n';
+          console.error('Error al iniciar sesión', error);
+        if (error.status === 422) {
+          this.errorMessage = 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.';
+        } else {
+          this.errorMessage = 'Ocurrió un error al iniciar sesión. Intenta nuevamente.';
+        }
         },
       });
     }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../models/auth.model';
 import { environment } from '../../../environments/environment.development';
 
@@ -28,10 +28,6 @@ export class AuthService {
           this.currentUserSubject.next(response);
           return response;
         }),
-        catchError((error) => {
-          console.error('Error al iniciar sesión', error);
-          return of(null);
-        })
       );
   }
 
