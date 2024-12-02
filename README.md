@@ -5,6 +5,12 @@ For each system that allow exchanges, the user can see the exchange values in li
 
 ## Running locally
 
+intall dependencies
+
+```bash
+npm install
+```
+
 To start a local development server, run:
 
 ```bash
