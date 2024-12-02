@@ -11,7 +11,6 @@ import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-system-detail',
   templateUrl: './system-detail.component.html',
-  styleUrls: ['./system-detail.component.scss'],
   imports: [
     CurrencyCalculatorComponent,
     NotExchangableCurrencyComponent,

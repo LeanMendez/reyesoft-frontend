@@ -6,7 +6,6 @@ import { CurrencyRates } from '../../../core/models/currency.model';
   selector: 'app-currency-calculator',
   imports: [CommonModule],
   templateUrl: './currency-calculator.component.html',
-  styleUrl: './currency-calculator.component.scss',
 })
 export class CurrencyCalculatorComponent implements OnChanges {
   @Input() currencies: CurrencyRates[] = [];
