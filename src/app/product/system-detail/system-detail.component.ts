@@ -4,47 +4,85 @@ import { SystemService } from '../../core/services/system.service';
 import { CurrencyCalculatorComponent } from './currency-calculator/currency-calculator.component';
 import { CurrencyRates } from '../../core/models/currency.model';
 import { NotExchangableCurrencyComponent } from './not-exchangable-currency/not-exchangable-currency.component';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { Systems } from '../../core/models/system.model';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-system-detail',
   templateUrl: './system-detail.component.html',
   styleUrls: ['./system-detail.component.scss'],
-  imports: [CurrencyCalculatorComponent, NotExchangableCurrencyComponent],
+  imports: [
+    CurrencyCalculatorComponent,
+    NotExchangableCurrencyComponent,
+    LoaderComponent,
+  ],
 })
 export class SystemDetailComponent implements OnInit {
   protected route = inject(ActivatedRoute);
   protected systemService = inject(SystemService);
 
-  currentSystenId: string = '';
-  currentRates: CurrencyRates[] = [];
-  filteredSystems: string[] = [];
+  systemId: string = '';
+  rates: CurrencyRates[] = [];
+  filteredSystems: Systems[] = [];
 
-  async ngOnInit(): Promise<void> {
+  isLoadingRates: boolean = false;
+  isLoadingSystems: boolean = false;
+
+  get isLoading(): boolean {
+    return this.isLoadingRates || this.isLoadingSystems;
+  }
+
+  get isSupportedSystem(): boolean {
+    return this.filteredSystems.some((system) => system.id === this.systemId);
+  }
+
+  ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.currentSystenId = params['id'];
-      this.getRates(this.currentSystenId);
+      this.systemId = params['id'];
+      this.getRates();
     });
-
     this.getSystems();
   }
 
   getSystems(): void {
-    this.systemService.getResources().subscribe((data) => {
-      this.filteredSystems = data.map(
-        (system) =>
-          (system.attributes.can_receive &&
-          system.attributes.can_send &&
-          !['dai', 'usdt', 'bitcoin'].includes(system.id)) && system.id
-      ).filter((system) => system !== false);
-    });
+    this.isLoadingSystems = true;
+    this.systemService
+      .getResources()
+      .pipe(finalize(() => (this.isLoadingSystems = false)))
+      .subscribe({
+        next: (supportedSystems) => {
+          this.filteredSystems = supportedSystems
+            .map(
+              (system) =>
+                system.attributes.can_receive &&
+                system.attributes.can_send &&
+                !['dai', 'usdt', 'bitcoin'].includes(system.id) &&
+                system
+            )
+            .filter((system) => system !== false);
+        },
+        error: (error) => {
+          console.error('Error fetching systems:', error);
+        },
+      });
   }
 
-  getRates(id: string): void {
-    this.systemService.getRatesAssociated(id).subscribe((data) => {
-      this.currentRates = Object.entries(data).map(([key, value]) => ({
-        name: key,
-        ...value,
-      }));
-    });
+  getRates(): void {
+    this.isLoadingRates = true;
+    this.systemService
+      .getRatesAssociated(this.systemId)
+      .pipe(finalize(() => (this.isLoadingRates = false)))
+      .subscribe({
+        next: (data) => {
+          this.rates = Object.entries(data).map(([key, value]) => ({
+            name: key,
+            ...value,
+          }));
+        },
+        error: (error) => {
+          console.error('Error fetching rates:', error);
+        },
+      });
   }
 }

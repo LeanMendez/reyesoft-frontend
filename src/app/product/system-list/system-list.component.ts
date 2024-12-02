@@ -1,12 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SystemService } from '../../core/services/system.service';
 import { Systems } from '../../core/models/system.model';
+import { LoaderComponent } from "../../shared/components/loader/loader.component";
 
 @Component({
   selector: 'app-systems',
   templateUrl: './system-list.component.html',
   styleUrls: ['./system-list.component.scss'],
   standalone: true,
+  imports: [LoaderComponent],
 })
 export class SystemListComponent implements OnInit {
   private systemService = inject(SystemService);

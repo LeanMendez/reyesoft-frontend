@@ -1,5 +1,6 @@
 <main class="m-8">
   <div class="flex flex-row w-full">
+    @if (!loading) {
     <div
       class="grid grid-cols-3 gap-4 max-w-3xl overflow-y-scroll scroll-hidden"
     >
@@ -9,9 +10,16 @@
           class="flex flex-col border border-1 border-gray-200 rounded-md p-4 hover:border-emerald-300 hover:shadow-md min-h-[180px] gap-1 justify-between"
         >
           <div class="flex flex-col min-h-[70px] gap-2">
-            <img class="max-h-[58px]" src="https://panel.saldo.com.ar/img/sistemas2/{{ item.id }}.big.png" alt="{{ item.attributes.name }}">
-            <h3 class="text-base font-medium text-gray-800">{{ item.attributes.name }}</h3>
-            
+            <img
+              class="max-h-[58px]"
+              src="https://panel.saldo.com.ar/img/sistemas2/{{
+                item.id
+              }}.big.png"
+              alt="{{ item.attributes.name }}"
+            />
+            <h3 class="text-base font-medium text-gray-800">
+              {{ item.attributes.name }}
+            </h3>
           </div>
           <span class="text-2xl text-left font-semibold text-[#0c9]">{{
             item.attributes.currency
@@ -20,6 +28,11 @@
       >
       }
     </div>
+    } @else {
+    <div class="flex md:min-w-[768px] items-center justify-center">
+      <app-loader size="large" />
+    </div>
+    }
     <aside
       class="flex sticky top-[100px] justify-center place-items-center h-[80vh] mx-[100px]"
     >
