@@ -1,0 +1,44 @@
+<div
+  class="flex flex-col min-h-[320px] md:min-w-[650px] p-8 border border-1 border-gray-200 rounded-md shadow-sm gap-6"
+>
+  <label class="text-gray-800 font-medium" for="rateSelect"
+    >Seleccione la moneda con la que desea operar:</label
+  >
+  <select
+    class="p-2 border border-1 border-gray-200 rounded-sm"
+    id="rateSelect"
+    [value]="selectedCurrency?.name"
+    (change)="onSelectCurrency($event)"
+  >
+    @for (rate of currencies; track rate.name) {
+    <option value="{{ rate.name }}">{{ rate.name }}</option>
+    }
+  </select>
+  <article>
+    <div class="flex flex-row items-center gap-8">
+      <img
+        class="max-h-[58px]"
+        src="https://panel.saldo.com.ar/img/sistemas2/{{
+          selectedCurrency?.name
+        }}.big.png"
+        alt="currency logo"
+      />
+      <div
+        class="flex flex-col gap-2 border border-1 border-gray-200 rounded-md p-4"
+      >
+        <span class="text-gray-800 font-medium">Compra</span>
+        <span class="text-[#0c9] text-xl font-semibold">{{
+          selectedCurrency?.ask
+        }}</span>
+      </div>
+      <div
+        class="flex flex-col gap-2 border border-1 border-gray-200 rounded-md p-4"
+      >
+        <span class="text-gray-800 font-medium">Venta</span>
+        <span class="text-[#0c9] text-xl font-semibold">{{
+          selectedCurrency?.bid
+        }}</span>
+      </div>
+    </div>
+  </article>
+</div>

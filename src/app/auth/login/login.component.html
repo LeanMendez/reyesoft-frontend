@@ -1,0 +1,30 @@
+<main class="flex justify-center items-center h-[calc(100vh-80px)] bg-slate-50">
+    <form class="flex flex-col w-[420px] bg-white p-12 shadow-sm" [formGroup]="form"  (ngSubmit)="onSubmit()">
+        <h1 class="text-3xl font-semibold">Inicia sesi&oacute;n</h1>
+        <div class="flex flex-col my-4 form-group">
+            <label class="mb-2 text-gray-800" for="email">Correo electr&oacute;nico</label>
+            <input class="w-full p-2 border border-1 border-gray-200 rounded-md" placeholder="Correo electr&oacute;nico" type="text" id="email" formControlName="email" (blur)="markFieldAsTouched('email')">
+            @if (form.get('email')?.invalid && form.get('email')?.touched) {
+                @if (form.get('email')?.hasError('required')) {
+                    <span class="text-red-500 text-sm">El correo electr&oacute;nico es requerido.</span>
+                } 
+                @else if (form.get('email')?.hasError('email')) {
+                    <span class="text-red-500 text-sm">El formato del correo no es v&aacute;lido.</span>
+                }
+            } 
+        </div>
+        <div class="flex flex-col my-4">
+            <label class="mb-2 text-gray-800" for="password">Contraseña</label>
+            <input class="w-full p-2 border border-1 border-gray-200 rounded-md" placeholder="Contraseña" type="password" id="password" formControlName="password" (blur)="markFieldAsTouched('password')">
+            @if (form.get('password')?.invalid && form.get('password')?.touched) {
+                @if (form.get('password')?.hasError('required')) {
+                    <span class="text-red-500 text-sm">La contraseña es requerida.</span>
+                } 
+                @else if (form.get('password')?.hasError('minlength')) {
+                    <span class="text-red-500 text-sm">La contraseña debe tener al menos 6 caracteres.</span>
+                }
+            } 
+        </div>
+        <button [disabled]="form.invalid" class="text-white font-base tracking-wide bg-[#0c9] w-full py-2 rounded text-lg shadow-sm hover:bg-emerald-400 disabled:bg-gray-400 disabled:cursor-auto" type="submit">Iniciar Sesi&oacute;n</button>
+    </form>
+</main>

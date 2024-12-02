@@ -1,0 +1,11 @@
+<main>
+    <div class="m-8">
+        <div class="flex flex-row w-full items-center justify-center">
+            @if (filteredSystems.includes(currentSystenId)) {
+                <app-currency-calculator [currencies]="currentRates" />
+            } @else {
+                <app-not-exchangable-currency />}
+        </div>
+    </div>
+
+</main>

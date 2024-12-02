@@ -1,0 +1,31 @@
+<header
+  class="flex flex-row justify-between items-center h-20 py-4 px-8 shadow-sm sticky top-0 backdrop-blur-md"
+>
+  <div class="flex flex-row">
+    <h1>
+      <img class="h-10" src="/logo-saldo-color.svg" alt="logo saldo" />
+    </h1>
+    <nav class="flex flex-row items-center px-8 gap-12">
+      <a
+        class="text-xl font-medium text-[#0c9] hover:text-emerald-400"
+        routerLink="/systems"
+        >Productos</a
+      >
+    </nav>
+  </div>
+  @if (userName) {
+  <div class="flex flex-row items-center gap-8">
+    <div class="flex flex-row items-center gap-2">
+      <span class="text-xl font-medium text-gray-800">{{ userName }}</span>
+    </div>
+    <div>
+      <button
+        class="text-white font-base tracking-wide bg-gray-950 px-4 py-2 rounded text-lg shadow-sm hover:bg-gray-800"
+        (click)="authService.logout()"
+      >
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+  } 
+</header>
