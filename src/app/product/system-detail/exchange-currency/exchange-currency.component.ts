@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { CurrencyRates } from '../../../core/models/currency.model';
 
 @Component({
-  selector: 'app-currency-calculator',
+  selector: 'app-exchange-currency',
   imports: [CommonModule],
-  templateUrl: './currency-calculator.component.html',
+  templateUrl: './exchange-currency.component.html',
 })
-export class CurrencyCalculatorComponent implements OnChanges {
+export class ExchangeCurrencyComponent implements OnChanges {
   @Input() currencies: CurrencyRates[] = [];
 
   selectedCurrency: CurrencyRates | null = null;

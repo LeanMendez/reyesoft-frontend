@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SystemService } from '../../core/services/system.service';
-import { CurrencyCalculatorComponent } from './currency-calculator/currency-calculator.component';
+import { ExchangeCurrencyComponent } from './exchange-currency/exchange-currency.component';
 import { CurrencyRates } from '../../core/models/currency.model';
 import { NotExchangableCurrencyComponent } from './not-exchangable-currency/not-exchangable-currency.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
@@ -12,7 +12,7 @@ import { finalize } from 'rxjs/operators';
   selector: 'app-system-detail',
   templateUrl: './system-detail.component.html',
   imports: [
-    CurrencyCalculatorComponent,
+    ExchangeCurrencyComponent,
     NotExchangableCurrencyComponent,
     LoaderComponent,
   ],
@@ -32,6 +32,7 @@ export class SystemDetailComponent implements OnInit {
     return this.isLoadingRates || this.isLoadingSystems;
   }
 
+  // Verifica si el sistema seleccionado está en la lista de sistemas soportados para exchange
   get isSupportedSystem(): boolean {
     return this.filteredSystems.some((system) => system.id === this.systemId);
   }
@@ -44,6 +45,7 @@ export class SystemDetailComponent implements OnInit {
     this.getSystems();
   }
 
+  // Obtiene la lista de sistemas soportados para exchange
   getSystems(): void {
     this.isLoadingSystems = true;
     this.systemService
@@ -67,6 +69,7 @@ export class SystemDetailComponent implements OnInit {
       });
   }
 
+  // Obtiene los rates del sistema
   getRates(): void {
     this.isLoadingRates = true;
     this.systemService

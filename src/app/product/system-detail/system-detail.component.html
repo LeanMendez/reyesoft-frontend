@@ -5,7 +5,7 @@
       </div>
     } @else {
       @if (isSupportedSystem) {
-        <app-currency-calculator [currencies]="rates" />
+        <app-exchange-currency [currencies]="rates" />
       } @else {
         <app-not-exchangable-currency />
       }
